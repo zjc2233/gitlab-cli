@@ -7,10 +7,11 @@ const fs = require('fs-extra')
 const inquirer = require('inquirer')
 
 const Generator = require('./Generator')
+const initConfigure = require('./configure')
 
 module.exports = async function (name, options) {
-  // 执行创建命令
-
+  // 设置配置信息
+  let { cloneUrl } = await initConfigure()
   // 当前命令行选择的目录
   const cwd  = process.cwd();
   // 需要创建的目录地址
