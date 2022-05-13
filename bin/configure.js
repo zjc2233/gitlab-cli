@@ -6,7 +6,7 @@ const fs = require("fs");
 
 function writeFile(data) {
   // 创建一个可以写入的流，写入到文件output.txt中
-  console.log(__dirname);
+  // console.log(__dirname);
   let writeStream = fs.createWriteStream(`${__dirname}/\config.js`);
 
   writeStream.write(data, "utf-8");
