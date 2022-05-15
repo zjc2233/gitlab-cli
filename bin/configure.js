@@ -28,6 +28,7 @@ function writeFile(data) {
 async function initConfigure() {
   if (["", null, undefined].includes(config.cloneUrl)) {
     // 如果配置信息为空，则需要键入配置信息
+    // cli绑定的组地址
     const { cloneUrl } = await inquirer.prompt([
       {
         type: "input", //type： input, number, confirm, list, checkbox ...
@@ -36,8 +37,18 @@ async function initConfigure() {
         default: "", // 默认值
       },
     ]);
+    // cli绑定的对应的个人访问令牌
+    const { PRIVATETOKEN } = await inquirer.prompt([
+      {
+        type: "input", //type： input, number, confirm, list, checkbox ...
+        name: "PRIVATETOKEN", // key 名
+        message: "Your Gitlab PRIVATETOKEN", // 提示信息
+        default: "", // 默认值
+      },
+    ]);
     console.log(path.resolve("./bin"));
     config.cloneUrl = cloneUrl;
+    config.PRIVATETOKEN = PRIVATETOKEN;
     let data = `module.exports=${JSON.stringify(config)}`
     console.log('data', data);
     writeFile(data)

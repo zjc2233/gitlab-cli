@@ -1,1 +1,1 @@
-module.exports={"cloneUrl":"refdsafda"}
+module.exports={"cloneUrl":"https://gitlab.com/projects-template1","PRIVATETOKEN":"glpat-5r_y4gsqBHusaHQ1yrY9"}
