@@ -1,4 +1,5 @@
 // lib/http.js
+const config = require("./config");
 
 // 通过 axios 处理请求
 const axios = require('axios')
@@ -35,7 +36,12 @@ async function getOauthToken(data) {
  */
 async function getRepoList(data) {
   // return axios.get('https://api.github.com/orgs/zjc-cli/repos')
-  return axios.get(`https://gitee.com/api/v5/orgs/zjc-cli/repos?access_token=${data.token}&type=all&page=1&per_page=20`)
+  return axios.get(config.cloneUrl,{
+    method: 'get',
+    headers: {
+      'PRIVATE-TOKEN': config.PRIVATETOKEN
+    }
+  })
 }
 
 /**

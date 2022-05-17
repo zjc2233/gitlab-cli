@@ -9,6 +9,7 @@ const util = require('util')
 const downloadGitRepo = require('download-git-repo') // 不支持 Promise
 const download = require('download');
 const clone = require('git-clone');
+const config = require("./config");
 
 // 添加加载动画
 async function wrapLoading(fn, message, ...args) {
@@ -72,10 +73,11 @@ class Generator {
   async getRepo(token) {
     // 1）从远程拉取模板数据
     const repoList = await wrapLoading(getRepoList, 'waiting fetch template',{token});
+    console.log('repoList', repoList);
     if (!repoList) return;
 
     // 过滤我们需要的模板名称
-    const repos = repoList.map(item => item.name);
+    const repos = repoList.map(item => item.path);
 
     // 2）用户选择自己新下载的模板名称
     const { repo } = await inquirer.prompt({
@@ -122,7 +124,7 @@ class Generator {
   async download(repo, tag){
 
     // 1）拼接下载地址
-    const requestUrl = `https://gitee.com/zjc-cli/${repo}.git`;
+    const requestUrl = `http://192.168.80.246:3000/project-template/${repo}.git`;
     
     // 2）调用下载方法
     // await wrapLoading(
@@ -133,10 +135,11 @@ class Generator {
 
 
     let downloadOption = {
-      args:[
-        "--branch",
-        `${tag}`
-      ]
+      // args:[
+      //   "--branch",
+      //   `${tag}`
+      // ]
+      // headers: { 'PRIVATE-TOKEN': config.PRIVATETOKEN }
     }
 
     clone(requestUrl, this.targetDir, downloadOption, function (err) {
@@ -155,16 +158,16 @@ class Generator {
   // 3）下载模板到模板目录
   async create(){
 
-    const token = await this.getToken()
+    // const token = await this.getToken()
 
     // 1）获取模板名称
-    const repo = await this.getRepo(token)
+    const repo = await this.getRepo()
 
     // 2) 获取 tag 名称
-    const tag = await this.getTag(repo,token)
+    // const tag = await this.getTag(repo)
     
     // 3）下载模板到模板目录
-    await this.download(repo, tag)
+    await this.download(repo)
     
     // 4）模板使用提示
     console.log(`\r\nSuccessfully created project ${chalk.cyan(this.name)}`)

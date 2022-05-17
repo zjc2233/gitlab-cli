@@ -1,1 +1,1 @@
-module.exports={"cloneUrl":"https://gitlab.com/projects-template1","PRIVATETOKEN":"glpat-5r_y4gsqBHusaHQ1yrY9"}
+module.exports={"cloneUrl":"http://192.168.80.246:3000/api/v4/groups/65/projects","PRIVATETOKEN":"xncLAD42fJ_jmuvyzsxz"}
